@@ -1,15 +1,15 @@
 import { ProxyState } from "../AppState.js";
-import { housesService } from "../Services/HousesService.js";
+import { jobsService } from "../Services/JobsService.js";
 
 
 //Private
 function _draw() {
-    let houses = ProxyState.houses
+    let jobs = ProxyState.jobs
     let template = ''
-    houses.forEach(house => {
-        template += house.Template
+    jobs.forEach(job => {
+        template += job.Template
     })
-    document.getElementById('houses').innerHTML = template
+    document.getElementById('jobs').innerHTML = template
 }
 // function showHouses() {
 //     let house = (document.getElementById("houseApp"))
@@ -23,64 +23,58 @@ function _draw() {
 
 
 //Public
-export default class HousesController {
+export default class JobsController {
     constructor() {
-        ProxyState.on('houses', _draw);
+        ProxyState.on('jobs', _draw);
 
         // REVIEW
         // GET CARS ON LOAD
-        this.getHouses()
+        this.getJobs()
     }
 
-    async getHouses() {
+    async getJobs() {
         try {
-            await housesService.getHouses()
+            await jobsService.getJobs()
         } catch (error) {
             console.error(error)
         }
     }
 
-    async createHouse() {
+    async createJob() {
         try {
             window.event.preventDefault()
             const form = window.event.target
-            let newHouse = {
+            let newJob = {
                 // @ts-ignore
-                price: form.price.value,
+                company: form.company.value,
                 // @ts-ignore
-                bedrooms: form.bedrooms.value,
+                jobTitle: form.jobTitle.value,
                 // @ts-ignore
-                bathrooms: form.bathrooms.value,
-                levels: form.levels.value,
+                hours: form.hours.value,
+                rate: form.rate.value,
                 // @ts-ignore  this converts the string to a number
-                year: Number(form.price.value),
-                // @ts-ignore
                 description: form.description.value,
                 // @ts-ignore
-                imgUrl: form.imgUrl.value
+
             }
-            await housesService.createHouse(newHouse)
+            await jobsService.createJob(newJob)
 
             // @ts-ignore
             form.reset()
 
-            $('#new-house-form').modal('hide')
+            $('#new-job-form').modal('hide')
         } catch (error) {
             console.error(error)
         }
     }
 
 
-    deleteHouse(id) {
+    deleteJob(id) {
         try {
-            housesService.deleteHouse(id)
+            jobsService.deleteJob(id)
         } catch (error) {
             console.error(error)
         }
-    }
-
-    bid(id) {
-        housesService.bid(id)
     }
 
 }

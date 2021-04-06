@@ -12,15 +12,12 @@ function _draw() {
   document.getElementById('cars').innerHTML = template
 }
 
-function showCars() {
-  let car = (document.getElementById("carApp"))
-  if (!car.classList('d-none')) {
-    car.classList.add('d-none')
-  } else {
-    car.classList.remove('d-none')
-  }
-}
-showCars()
+// function showCars() {
+//   let car = (document.getElementById("carApp"))
+//   car.style.display = ''
+
+// }
+// showCars()
 
 //Public
 export default class CarsController {
